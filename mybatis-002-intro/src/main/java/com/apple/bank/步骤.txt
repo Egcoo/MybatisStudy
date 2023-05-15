@@ -1,0 +1,17 @@
+1.建立数据库表、HTMl页面、tomcat服务器的连接
+2.建立相应的pojo类、 sqlSessionUtil类，获取前端传来的数据Servlet类
+3.获取前端的数据以后，servlet只是调用service的方法（eg：transfer），并不处理具体的业务，
+进而使用到service层。
+
+4.写service建立接口（accountService），使用实现类accountServiceImpl 实现接口方法。 需要判断账户余额是否充足，
+就要用到sql语句，进而使用到dao层（DAO对象中的任何一个方法和业务不挂钩，只是负责增删改查），转去写dao
+
+5.写dao的过程中，建立接口（accountDao），使用实现类accountDaoImpl 实现接口方法。
+同时过程中填写补充 AccountMapper（需要提前在mybatis的核心文件中配置）
+
+6.写完dao以后，转回service继续写service方法，然后补充servlet方法
+
+7.对于系统的改进
+    1.事务提交不能在DAO方法中做（完成一条提交一条），而是在service方法中，使用一个sqlSession对象，一次事务提交
+    2.使用ThreadLocal 对程序进行维护, 保证一个线程对应一个sqlSession对象
+    3.dao中的代码固定且重复，在内存中固定生成

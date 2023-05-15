@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Transfer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Bank Transfer</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/bank/transfer" method="post">
+                        <div class="form-group">
+                            <label for="fromAccount">转出账户</label>
+                            <input class="form-control" id="fromAccount" placeholder="Enter account" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="toAccount">转入账户</label>
+                            <input class="form-control" id="toAccount" placeholder="Enter account" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="money">转出金额</label>
+                            <input class="form-control" id="money" placeholder="Enter money" type="text">
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">转账</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- External scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apple.mybatis.mapper.ClazzMapper">
+
+    <insert id="insert">
+    </insert>
+    <delete id="deleteById">
+    </delete>
+    <update id="update">
+    </update>
+    <select id="selectById" resultType="Car">
+    </select>
+
+    <select id="selectAll" resultType="Car">
+    </select>
+
+    <!-- ${}是先进行拼接，后进行编译   -->
+    <delete id="deleteBatch">
+        delete
+        from xxxxx
+        where id in ()
+    </delete>
+
+    <select id="selectAllByAscOrDesc" resultType="Car">
+    </select>
+
+    <select id="selectByBrandLike" resultType="Car">
+    </select>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <properties resource="jdbc.properties"/>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--  在这里可以有多个环境，一个环境往往代表一个数据库，default是默认使用的数据库  -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+        <environment id="mybatis">
+            <transactionManager type="JDBC"/>
+            <!--
+            1.dataSource 被称为数据源
+            2.dataSource作用是什么？ 为程序提供Connection对象（但凡是给程序提供Connection对象的,都叫做数据源）
+            3.数据源实际上是一套规范，JDK中有这样一套规范：javax.sql.DataSource(这个数据源的规范，这套接口实际上是JDK规定的)
+            4.我们自己也可以编写数据源组件，只要实现javax.sql.DataSource 接口就行了，实现接口当中的方法，这样就有了自己的数据源
+            比如你可以写一个属于自己的数据库连接池（数据库连接池提供链接对象，所以数据库连接池就是一个数据源）
+            -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/itheima"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+                <property name="poolMaximumActiveConnection" value="10"/>
+                <!--   每隔2s打印日志，并且尝试获取链接对象 -->
+                <property name="poolTimeToWait" value="2000"/>
+                <!--   强行让某个链接空闲，超时时间的设置-->
+                <property name="poolMaximumCheckoutTime" value="10000"/>
+                <!--   最多的空闲数量-->
+                <property name="poolMaximumIdleConnection" value="5"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <mappers>
+        <!-- 指定文件路径  -->
+        <mapper resource="CarMapper.xml"/>
+        <mapper resource="UserMapper.xml"/>
+    </mappers>
+</configuration>

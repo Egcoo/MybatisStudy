@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.apple.mybatis.mapper.CarMapper">
+
+
+    <insert id="deleteByIds2">
+        delete
+        form t_car where
+        <foreach collection="ids" item="id" separator="or">
+            id = #{id}
+        </foreach>
+    </insert>
+
+    <insert id="insertBatch">
+        insert into t_car values
+        <foreach collection="cars" item="car" separator=",">
+            (null ,#{car.carNum},#{car.brand},#{car.guidePrice},#{car.produceTime},#{car.carType})
+        </foreach>
+    </insert>
+
+
+    <!--
+    foreach标签的属性:
+    collection:指定数组或者集合
+    item:代表数组或集合中的元素
+    separator:循环之间的分隔符
+    open:foreach循环拼接的所有sql语句的最前面以什么开始。
+    close:foreach循环拼接的所有sql语句的最后面以什么结束。
+    collection="ids"第一次写这个的时候报错了,错误信息是:[array, arg0]
+    什么意思?
+    map.put("array",数组);
+    map.put("arg0",数组);
+
+    -->
+    <delete id="deleteByIds">
+        delete from t_car where id in (
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+
+    <select id="selectByChoose" resultType="Car">
+        select * from t_car
+        <where>
+            <choose>
+                <when test="brand != null and brand != ''">
+                    brand like "%"#{barnd}"%"
+                </when>
+                <when test="guidePrice != null and guidePrice != ''">
+                    guide_price > #{guidePrice}
+                </when>
+                <otherwise>
+                    car_type = #{carType}
+                </otherwise>
+            </choose>
+        </where>
+
+    </select>
+
+
+    <update id="updateBySet">
+        update t_car
+        <set>
+            <if test="carNum != null and carNum != ''">car_num = #{carNum},</if>
+            <if test="brand != null and brand != ''">brand = #{brand},</if>
+            <if test="guidePrice != null and guidePrice !=''">guide_price = #{guidePrice},</if>
+            <if test="produceTime != null and produceTime != ''">produce_time = #{produceTime},</if>
+            <if test="carType != null and carType != ''">car_type = #{carType},</if>
+        </set>
+        where
+        id = #{id}
+    </update>
+
+
+    <select id="selectByMultiConditionWithTrim" resultType="Car">
+        select * from t_car;
+        <!--
+            prefix:加前缀
+            suffix:加后缀
+            prefixOverrides:删除前缀
+            suffixOverrides:删除后缀
+        -->
+        <!-- prefix="where" 是把trim标签所有内容的前面添加 where-->
+        <!-- suffixOverrides= “and|or” 把trim 标签中的内容的后缀and或者or去掉-->
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="brand != null and brand != ''">
+                brand like "%"#{brand}"%"
+            </if>
+            <if test="guidePrice != null and brand != ''">
+                and guide_price > #{guidePrice}
+            </if>
+            <if test="carType != null and carType != ''">
+                and car_type = #{carType}
+            </if>
+
+        </trim>
+    </select>
+
+
+    <select id="selectByMultiConditionWithWhere" resultType="Car">
+        select * from t_car
+        <where>
+            <if test="brand != null and brand != ''">
+                brand like "%"#{brand}"%"
+            </if>
+            <if test="guidePrice != null and brand != ''">
+                and guide_price > #{guidePrice}
+            </if>
+            <if test="carType != null and carType != ''">
+                and car_type = #{carType}
+            </if>
+        </where>
+    </select>
+
+    <!--
+        1.if标签中的test属性是必须的。
+        2.if标签中test属性的值是flase 或者 true
+        3.如果test是true，则if标签中的sql语句就会拼接，反之则不会
+        4.当test属性中可以使用的是
+            当使用了@param注解，那么test要出现的是@param注解指定的参数名，@Param("brand"),那么这里只能使用brand
+            当没有使用注解，那么test中要出现的是，param1，param2，param3，arg0，arg1，arg2
+            当使用了pojo，那么test中出现的是pojo类的属性名。
+        5.在mybatis的动态sql中，不能使用&&，只能使用and
+    -->
+    <select id="selectByMultiCondition" resultType="Car">
+        select * from t_car where 1 = 1
+
+        <if test="brand != null and brand != ''">
+            brand like "%"#{brand}"%"
+        </if>
+        <if test="guidePrice != null and brand != ''">
+            and guide_price > #{guidePrice}
+        </if>
+        <if test="carType != null and carType != ''">
+            and car_type = #{carType}
+        </if>
+
+    </select>
+
+    <select id="selectTotal" resultType="long">
+        select count(*)
+        from t_car;
+    </select>
+
+    <select id="selectAllByMapUnderscoreToCamelCase" resultType="Car">
+        select *
+        from t_car;
+    </select>
+
+    <!--
+    1.专门定义一个结果映射，在这个结果映射中指定数据库表的字段名和java类的属性名的对应关系。
+    2.type属性：用来指定POJO类的类名
+    3.id属性，指定resultMap的唯一标准，这个id将来要在select标签中使用。
+    -->
+    <resultMap id="carResultMap" type="Car">
+        <!--  如果数据库表中有主键，一般都是有主键，不然不符合数据库设计第一范式-->
+        <!--  如果有主键，建议这里配置一个id标签，注意：这不是必须的，但是官方的解释：这样的配置可以让mybatis提高效率-->
+        <id property="id" column="id"/>
+        <!--  property后面填写POJO类的属性名-->
+        <!--  column后面填写数据库表的字段名,如果是一样的，可以省略-->
+        <result property="carNum" column="car_num"/>
+        <result property="brand" column="brand"/>
+        <result property="guidePrice" column="guide_price"/>
+        <result property="produceTime" column="produce_time"/>
+        <result property="carType" column="car_type"/>
+    </resultMap>
+
+    <select id="selectAllByResultMap" resultMap="carResultMap">
+        select *
+        from t_car;
+    </select>
+
+    <select id="selectAllRetMap" resultType="map">
+        select *
+        from t_car;
+    </select>
+
+    <!-- returnType="java.util.Map" 返回map而不是list   -->
+    <select id="selectAllRetListMap" resultType="map">
+        select *
+        from t_car;
+    </select>
+
+
+    <!-- returnType="java.util.Map" 有别名：map   -->
+    <select id="selectByIdRetMap" resultType="map">
+        select *
+        from t_car
+        where id = #{id};
+    </select>
+
+    <!--
+        useGeneratedKeys="true" 使用自动生成的主键值
+        keyProperty="id" 指定主键值赋值给对象的那个属性，这个就表示主键值赋值给Car对象的id属性
+    -->
+    <insert id="insertCarUseGeneratedKeys" useGeneratedKeys="true" keyProperty="id">
+        insert into t_car (null, #{carNum}, #{brand}, #{guidePrice}, #{produceTime}, #{carType});
+    </insert>
+
+    <insert id="insert">
+        insert into t_car (id, car_num, brand, guide_price, produce_time, car_type)
+        values (null, #{carNum}, #{brand}, #{guidePrice}, #{produceTime}, #{carType});
+    </insert>
+    <delete id="deleteById">
+        delete
+        from t_car
+        where id = #{id}
+    </delete>
+    <update id="update">
+        update t_car
+        set car_num      = #{carNum},
+            brand        = #{brand},
+            guide_price  = #{guidePrice},
+            produce_time = #{produceTime},
+            car_type     = #{carType}
+        where id = #{id};
+    </update>
+
+    <!--  声明一个sql片段  -->
+    <sql id="carColumnNameSql">
+        id
+        ,
+       car_num      as carNum,
+       brand,
+       guide_price  as guidePrice,
+       produce_time as produceTime,
+       car_type     as carType
+    </sql>
+
+    <select id="selectById" resultType="Car">
+        <!-- select * from t_car where id = #{id};-->
+        select id,
+        car_num as carNum,
+        brand,
+        guide_price as guidePrice,
+        produce_time as produceTime,
+        car_type as carType
+        from t_car
+        where id = #{id};
+    </select>
+
+    <select id="selectAll" resultType="Car">
+        select
+        <include refid="carColumnNameSql"/>
+        from t_car;
+    </select>
+
+    <!-- ${}是先进行拼接，后进行编译   -->
+    <delete id="deleteBatch">
+        delete
+        from t_car
+        where id in (${ids})
+    </delete>
+
+    <select id="selectAllByAscOrDesc" resultType="Car">
+        select id,
+               car_num      as carNum,
+               brand,
+               guide_price  as guidePrice,
+               produce_time as produceTime,
+               car_type     as carType
+        from t_car
+        order by produce_time ${ascOrDesc}
+    </select>
+
+    <select id="selectByBrandLike" resultType="Car">
+        select id,
+               car_num      as carNum,
+               brand,
+               guide_price  as guidePrice,
+               produce_time as produceTime,
+               car_type     as carType
+        from t_car
+        where
+--             brand like '%${brand}%'
+brand like concat('%', #{brand}, '%')
+    </select>
+</mapper>
