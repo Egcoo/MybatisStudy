@@ -4,6 +4,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.StudentMapper">
 
+    <!--  一条sql语句，完成多对一的分步查询   -->
+    <!--  这里是第一步是，根据学生的id查询学生的所有信息，这些信息当中含有班级id（cid）   -->
+    <resultMap id="studentResultMapByStep" type="Student">
+        <id property="sid" column="sid"/>
+        <result property="sname" column="sname"/>
+        <association property="clazz"
+                     select="org.apple.mybatis.mapper.ClazzMapper.selectByIdStep2"
+                     column="cid"/>
+
+    </resultMap>
+
+    <select id="selectByIdStep1" resultMap="studentResultMapByStep">
+        select sid, sname, cid
+        from t_student
+        where sid = #{sid}
+    </select>
+
+
+    <!--  一条sql语句，association 关联映射   -->
+    <resultMap id="studentResultMapAssociation" type="Student">
+        <id property="sid" column="sid"/>
+        <result property="sname" column="sname"/>
+        <!--
+            association:翻译为关联。一个student对象关联一个Clazz对象
+            property：提供要映射的pojo类的属性名
+            javaType: 用来指定要映射的java类型
+        -->
+        <association property="clazz" javaType="Clazz">
+            <id property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
+        </association>
+    </resultMap>
 
     <!-- 多对一映射的第一种方式：一条sql语句，级联属性映射 -->
     <resultMap id="studentResultMap" type="Student">
@@ -20,26 +52,5 @@
         from t_student s
                  left join t_clazz c on s.sid = c.cid
         where s.sid = #{sid}
-    </select>
-
-
-    <insert id="insert">
-    </insert>
-    <delete id="deleteById">
-    </delete>
-    <update id="update">
-    </update>
-
-
-    <select id="selectAll">
-    </select>
-
-    <delete id="deleteBatch">
-    </delete>
-
-    <select id="selectAllByAscOrDesc">
-    </select>
-
-    <select id="selectByBrandLike">
     </select>
 </mapper>

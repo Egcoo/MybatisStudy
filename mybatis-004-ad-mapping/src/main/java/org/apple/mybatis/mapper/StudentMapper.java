@@ -8,6 +8,24 @@ import org.apple.mybatis.pojo.Student;
  */
 public interface StudentMapper {
 
+
+    /**
+     * 分步查询第一步：现根据学生的sid查询学生的信息
+     *
+     * @param sid
+     * @return
+     */
+    Student selectByIdStep1(Integer sid);
+
+    /**
+     * 一条SQL语句，association
+     *
+     * @param sid
+     * @return
+     */
+    Student selectByIdAssociation(Integer sid);
+
+
     /**
      * 根据id获取学生信息，同时获取学生关联的班级信息
      *

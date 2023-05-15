@@ -14,6 +14,28 @@ import java.io.IOException;
  */
 public class StudentMapperTest {
 
+    //写一个名为testSelectByIdStep1()的测试方法，并打印结果
+    @Test
+    public void testSelectByIdStep1() throws IOException {
+        SqlSession sqlSession = SqlSessionUtil.openSqlSession();
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        Student student = mapper.selectByIdStep1(1);
+        System.out.println(student);
+        sqlSession.close();
+    }
+
+
+    //写一个名为testSelectByIdAssociation()的测试方法，并打印结果
+    @Test
+    public void testSelectByIdAssociation() throws IOException {
+        SqlSession sqlSession = SqlSessionUtil.openSqlSession();
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        Student student = mapper.selectByIdAssociation(1);
+        System.out.println(student);
+        sqlSession.close();
+    }
+
+
     @Test
     public void testSelectById() throws IOException {
         SqlSession sqlSession = SqlSessionUtil.openSqlSession();
