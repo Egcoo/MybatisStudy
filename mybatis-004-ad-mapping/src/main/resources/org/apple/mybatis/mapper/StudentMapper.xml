@@ -4,28 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.StudentMapper">
 
+
+    <!-- 多对一映射的第一种方式：一条sql语句，级联属性映射 -->
+    <resultMap id="studentResultMap" type="Student">
+        <id property="sid" column="sid"/>
+        <result property="sname" column="sname"/>
+        <result property="clazz.cid" column="cid"/>
+        <result property="clazz.cname" column="cname"/>
+    </resultMap>
+    <select id="selectById" resultMap="studentResultMap">
+        select s.sid,
+               s.sname,
+               c.cid,
+               c.cname
+        from t_student s
+                 left join t_clazz c on s.sid = c.cid
+        where s.sid = #{sid}
+    </select>
+
+
     <insert id="insert">
     </insert>
     <delete id="deleteById">
     </delete>
     <update id="update">
     </update>
-    <select id="selectById" resultType="Car">
+
+
+    <select id="selectAll">
     </select>
 
-    <select id="selectAll" resultType="Car">
-    </select>
-
-    <!-- ${}是先进行拼接，后进行编译   -->
     <delete id="deleteBatch">
-        delete
-        from xxxxx
-        where id in ()
     </delete>
 
-    <select id="selectAllByAscOrDesc" resultType="Car">
+    <select id="selectAllByAscOrDesc">
     </select>
 
-    <select id="selectByBrandLike" resultType="Car">
+    <select id="selectByBrandLike">
     </select>
 </mapper>

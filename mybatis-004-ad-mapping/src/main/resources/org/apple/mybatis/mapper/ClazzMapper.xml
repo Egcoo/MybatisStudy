@@ -10,10 +10,10 @@
     </delete>
     <update id="update">
     </update>
-    <select id="selectById" resultType="Car">
+    <select id="selectById">
     </select>
 
-    <select id="selectAll" resultType="Car">
+    <select id="selectAll">
     </select>
 
     <!-- ${}是先进行拼接，后进行编译   -->
@@ -23,9 +23,9 @@
         where id in ()
     </delete>
 
-    <select id="selectAllByAscOrDesc" resultType="Car">
+    <select id="selectAllByAscOrDesc">
     </select>
 
-    <select id="selectByBrandLike" resultType="Car">
+    <select id="selectByBrandLike">
     </select>
 </mapper>

@@ -31,13 +31,6 @@ public class SqlSessionUtil {
     // 为了防止new对象，构造方法私有化
     private SqlSessionUtil() {
     }
-    //public static SqlSession openSqlSession() throws IOException {
-    //    SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
-    //    // 获取SqlSessionFactory对象，一个SqlSessionFactory对应一个environment，一个environment通常是一个数据库
-    //    SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(Resources.getResourceAsStream("mybatis-config.xml"));
-    //    SqlSession sqlSession = sqlSessionFactory.openSession();
-    //    return sqlSession;
-    //}
 
     public static SqlSession openSqlSession() throws IOException {
 

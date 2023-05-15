@@ -12,14 +12,14 @@ package org.apple.mybatis.pojo;
  * 多对一： 多在前，那么多就是主表
  * 一对多：一在前，那么一就是主表
  */
-public class clazz {
+public class Clazz {
     private Integer cid;
     private String cname;
 
-    public clazz() {
+    public Clazz() {
     }
 
-    public clazz(Integer cid, String cname) {
+    public Clazz(Integer cid, String cname) {
         this.cid = cid;
         this.cname = cname;
     }
