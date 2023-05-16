@@ -8,7 +8,11 @@
     <properties resource="jdbc.properties"/>
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--  一般情况下，数据的字段和我们前端的字段命名规则不一样，查询数据库的时候需要加一个映射，
+        把数据库字段映射为驼峰式的字段，但是mybatis里有一个配置可以将这个转换自动化，这就是mapUnderscoreToCamelCase-->
         <setting name="mapUnderscoreToCamelCase" value="true "/>
+        <!--  延迟加载全局开关,默认不开启,手动开启-->
+        <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
     <typeAliases>
         <!--    type:指定给那个类型起别名 alias：指定别名  

@@ -4,13 +4,9 @@ package org.apple.mybatis.pojo;
  * @ author Egcoo
  * @ date 2023/5/14 - 11:08
  * <p>
- * 多对一：
- * 多的一方是：Student
- * 一的一方是：Clazz
- * 怎么分主表和副表
- * 原则：谁在前谁是主表
- * 多对一： 多在前，那么多就是主表
- * 一对多：一在前，那么一就是主表
+ * 一对多:一在前。一是主表。多是副表。
+ * 主表:t_clazz
+ * 副表:t_student
  */
 public class Clazz {
     private Integer cid;

@@ -20,7 +20,13 @@ public class StudentMapperTest {
         SqlSession sqlSession = SqlSessionUtil.openSqlSession();
         StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
         Student student = mapper.selectByIdStep1(1);
-        System.out.println(student);
+        //System.out.println(student);
+
+        //当你之查看学生名字的时候就只会执行一条语句
+        System.out.println(student.getSname());
+        //直到程序执行到查看班级的名字,才会执行下一条语句
+        System.out.println(student.getClazz().getCname());
+
         sqlSession.close();
     }
 

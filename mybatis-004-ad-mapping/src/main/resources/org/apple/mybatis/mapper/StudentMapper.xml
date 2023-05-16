@@ -4,6 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.StudentMapper">
 
+    <!--
+        分步查询的优点
+        1.复用性增强,可以重复利用.(大步拆解成n多个小碎步,每一个小碎步可以重复利用)
+        2.采用这种分步查询,可以充分利用他们的延迟加载/懒加载机制
+        什么是延迟加载,有什么用?
+        延迟加载的核心原理是:用的时候再执行查询语句,不用的时候就不查询
+        作用:提高性能
+        在mybatis当中怎么开启延迟加载呢?
+        association标签中添加fetchType="lazy"
+        注意:默认情况下是没有开启延迟加载的。需要设置:fetchTyype="lazy"这种在association标签中配置fetchType="lazy",
+        是局部都的设置,只对当前的association关联的sql语句起作用
+        在实际的开发中,大部分都是需要使用延迟加载的,所以建建议开启全部的延迟加载机制:
+        在mybatis核心配置文件中添加全局配置:lazyLoadingEnabled=true
+    -->
+
     <!--  一条sql语句，完成多对一的分步查询   -->
     <!--  这里是第一步是，根据学生的id查询学生的所有信息，这些信息当中含有班级id（cid）   -->
     <resultMap id="studentResultMapByStep" type="Student">
@@ -11,7 +26,8 @@
         <result property="sname" column="sname"/>
         <association property="clazz"
                      select="org.apple.mybatis.mapper.ClazzMapper.selectByIdStep2"
-                     column="cid"/>
+                     column="cid"
+                     fetchType="lazy"/>
 
     </resultMap>
 
