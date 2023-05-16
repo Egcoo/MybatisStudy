@@ -53,6 +53,17 @@
         </association>
     </resultMap>
 
+    <select id="selectByIdAssociation" resultMap="studentResultMapAssociation">
+        select s.sid,
+               s.sname,
+               c.cid,
+               c.cname
+        from t_student s
+                 left join t_clazz c on s.cid = c.cid
+        where s.sid = #{sid}
+    </select>
+
+
     <!-- 多对一映射的第一种方式：一条sql语句，级联属性映射 -->
     <resultMap id="studentResultMap" type="Student">
         <id property="sid" column="sid"/>
@@ -66,7 +77,7 @@
                c.cid,
                c.cname
         from t_student s
-                 left join t_clazz c on s.sid = c.cid
+                 left join t_clazz c on s.cid = c.cid
         where s.sid = #{sid}
     </select>
 </mapper>

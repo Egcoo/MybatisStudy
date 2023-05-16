@@ -1,5 +1,7 @@
 package org.apple.mybatis.pojo;
 
+import java.util.List;
+
 /**
  * @ author Egcoo
  * @ date 2023/5/14 - 11:08
@@ -11,6 +13,7 @@ package org.apple.mybatis.pojo;
 public class Clazz {
     private Integer cid;
     private String cname;
+    private List<Student> stus;
 
     public Clazz() {
     }
@@ -22,9 +25,10 @@ public class Clazz {
 
     @Override
     public String toString() {
-        return "clazz{" +
+        return "Clazz{" +
                 "cid=" + cid +
                 ", cname='" + cname + '\'' +
+                ", stus=" + stus +
                 '}';
     }
 
@@ -42,5 +46,13 @@ public class Clazz {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    public List<Student> getStus() {
+        return stus;
+    }
+
+    public void setStus(List<Student> stus) {
+        this.stus = stus;
     }
 }

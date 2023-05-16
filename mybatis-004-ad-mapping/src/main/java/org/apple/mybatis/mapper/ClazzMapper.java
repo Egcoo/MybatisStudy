@@ -9,6 +9,14 @@ import org.apple.mybatis.pojo.Clazz;
 public interface ClazzMapper {
 
     /**
+     * 根据班级编号查询班级信息
+     *
+     * @param cid
+     * @return
+     */
+    Clazz selectByCollection(Integer cid);
+
+    /**
      * 分布查询第二步，根据cid获取班级信息
      *
      * @param id
