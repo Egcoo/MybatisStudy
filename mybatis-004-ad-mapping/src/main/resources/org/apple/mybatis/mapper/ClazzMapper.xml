@@ -4,6 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.ClazzMapper">
 
+    <!--
+    分步查询第一步：根据班级的cid获取班级信息
+    -->
+    <resultMap id="clazzResultMapStep" type="Clazz">
+        <id property="cid" column="cid"/>
+        <result property="cname" column="cname"/>
+        <collection property="stus"
+                    select="org.apple.mybatis.mapper.StudentMapper.selectByCidStep2"
+                    column="cid"/>
+    </resultMap>
+
+    <select id="selectByStep1" resultMap="clazzResultMapStep">
+        select cid, cname
+        from t_clazz
+        where cid = #{cid}
+    </select>
+
 
     <resultMap id="clazzResultMap" type="Clazz">
         <id property="cid" column="cid"/>

@@ -2,12 +2,21 @@ package org.apple.mybatis.mapper;
 
 import org.apple.mybatis.pojo.Student;
 
+import java.util.List;
+
 /**
  * @ author Egcoo
  * @ date 2023/5/14 - 11:13
  */
 public interface StudentMapper {
 
+    /**
+     * 根据班级编号查询学生信息
+     *
+     * @param cid
+     * @return
+     */
+    List<Student> selectByCidStep2(Integer cid);
 
     /**
      * 分步查询第一步：现根据学生的sid查询学生的信息

@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.StudentMapper">
 
+    <select id="selectByCidStep2" resultType="Student">
+        select *
+        from t_student
+        where cid = #{cid};
+    </select>
     <!--
         分步查询的优点
         1.复用性增强,可以重复利用.(大步拆解成n多个小碎步,每一个小碎步可以重复利用)

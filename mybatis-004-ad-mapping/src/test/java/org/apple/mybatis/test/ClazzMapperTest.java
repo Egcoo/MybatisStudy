@@ -16,6 +16,16 @@ public class ClazzMapperTest {
 
     //写一个名为testSelectByCollection()的测试方法，并打印结果
     @Test
+    public void testSelectByStep1() throws IOException {
+        SqlSession sqlSession = SqlSessionUtil.openSqlSession();
+        ClazzMapper mapper = sqlSession.getMapper(ClazzMapper.class);
+        Clazz clazz = mapper.selectByStep1(1000);
+        System.out.println(clazz);
+        sqlSession.close();
+    }
+
+    //写一个名为testSelectByCollection()的测试方法，并打印结果
+    @Test
     public void testSelectByCollection() throws IOException {
         SqlSession sqlSession = SqlSessionUtil.openSqlSession();
         ClazzMapper mapper = sqlSession.getMapper(ClazzMapper.class);
@@ -23,4 +33,6 @@ public class ClazzMapperTest {
         System.out.println(clazz);
         sqlSession.close();
     }
+
+
 }
