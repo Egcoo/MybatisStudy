@@ -1,5 +1,6 @@
 package org.apple.mybatis.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * 主表:t_clazz
  * 副表:t_student
  */
-public class Clazz {
+public class Clazz implements Serializable {
     private Integer cid;
     private String cname;
     private List<Student> stus;

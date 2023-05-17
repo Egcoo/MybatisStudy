@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.ClazzMapper">
 
+    <!-- 保证二级缓存全局性的开启 + 局部性的配置
+        2.只有SqlSession关闭以后，一级缓存才会写入二级缓存
+    -->
+    <cache/>
     <!--
     分步查询第一步：根据班级的cid获取班级信息
     -->

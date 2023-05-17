@@ -1,5 +1,7 @@
 package org.apple.mybatis.pojo;
 
+import java.io.Serializable;
+
 /**
  * @ author Egcoo
  * @ date 2023/5/14 - 11:09
@@ -12,7 +14,7 @@ package org.apple.mybatis.pojo;
  * 多对一： 多在前，那么多就是主表
  * 一对多：一在前，那么一就是主表
  */
-public class Student {
+public class Student implements Serializable {
     private Integer sid;
     private String sname;
     private Clazz clazz;
