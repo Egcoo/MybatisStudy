@@ -4,7 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apple.mybatis.mapper.StudentMapper">
 
-    <cache/>
+    <!--    <cache/>-->
+
+    <!-- 集成ehcache -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <select id="selectByCidStep2" resultType="Student">
         select *
         from t_student

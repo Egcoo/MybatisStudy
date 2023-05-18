@@ -7,7 +7,9 @@
     <!-- 保证二级缓存全局性的开启 + 局部性的配置
         2.只有SqlSession关闭以后，一级缓存才会写入二级缓存
     -->
-    <cache/>
+    <!--    <cache/>-->
+    <!-- 集成ehcache -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     <!--
     分步查询第一步：根据班级的cid获取班级信息
     -->
